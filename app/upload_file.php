@@ -105,8 +105,8 @@ imagefttext($dst, 75, 0, 20, 80, $black, $font, $text);
 list($dst_w, $dst_h, $dst_type) = getimagesize($dst_path);
 switch ($dst_type) {
 case 1://GIF
-header('Content-Type: image/gif');
-imagegif($dst);
+$save = "$path $name";
+imagejpeg($dst, $save);
 break;
 case 2://JPG
 #header('Content-Type: image/jpeg');
@@ -115,8 +115,8 @@ $save = "$path $name";
 imagejpeg($dst, $save);
 break;
 case 3://PNG
-header('Content-Type: image/png');
-imagepng($dst);
+$save = "$path $name";
+imagejpeg($dst, $save);
 break;
 default:
 break;
