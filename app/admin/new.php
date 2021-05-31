@@ -53,6 +53,7 @@ include "../../config/mysql.php";
 $sql1=$mysqli->query("CREATE TABLE student$affairs LIKE qndxx.student");
 $sql2=$mysqli->query("INSERT student$affairs SELECT * FROM qndxx.student");
 $sql3=$mysqli->query("ALTER TABLE student$affairs ADD INDEX( `sid`, `UUID`);");
+$sql4=$mysqli->query("UPDATE student$affairs SET`status`='0'");
 }
 
 
