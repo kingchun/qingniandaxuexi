@@ -7,8 +7,21 @@
 
 
 <?php
+include "../config/mysql.php";
 // 允许上传的图片后缀
+$p="/^\d{11}$/";//限制字符怕gg
 $sid = $_POST['sid']; //学号
+if (!preg_match($p, $sid)) {
+    echo '<h1>学号错误！</h1>';
+    exit();
+}
+
+$sql = $mysqli->query("SELECT `name` FROM `student` WHERE `UUID` = $sid"); //查询学号是否存在
+if($sql->num_rows == 0){
+    echo '<h1>学号错误！没有此学号</h1>';
+    exit();
+}
+
 $affair = $_POST['affair']; //事务
 #$path = "tmp/" . $affair . "/upload/"; //路径
 $path = "tmp/$affair/upload/"; //路径
@@ -105,8 +118,8 @@ imagefttext($dst, 75, 0, 20, 80, $black, $font, $text);
 list($dst_w, $dst_h, $dst_type) = getimagesize($dst_path);
 switch ($dst_type) {
 case 1://GIF
-$save = "$path $name";
-imagejpeg($dst, $save);
+header('Content-Type: image/gif');
+imagegif($dst);
 break;
 case 2://JPG
 #header('Content-Type: image/jpeg');
@@ -115,8 +128,8 @@ $save = "$path $name";
 imagejpeg($dst, $save);
 break;
 case 3://PNG
-$save = "$path $name";
-imagejpeg($dst, $save);
+header('Content-Type: image/png');
+imagepng($dst);
 break;
 default:
 break;
